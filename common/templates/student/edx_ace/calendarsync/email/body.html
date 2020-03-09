@@ -1,0 +1,22 @@
+{% extends 'ace_common/edx_ace/common/base_body.html' %}
+
+{% load django_markup %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+        <td>
+            <h1>
+                {% trans {{ calendar_sync_headline }} as headline %}{{ headline | force_escape }}
+            </h1>
+            <p style="color: rgba(0,0,0,.75);">
+                {% filter force_escape %}
+                    {% blocktrans %}{{ calendar_sync_body }}{% endblocktrans %}
+                {% endfilter %}
+                <br />
+            </p>
+        </td>
+    </tr>
+</table>
+{% endblock %}
