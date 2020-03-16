@@ -812,16 +812,11 @@ class ProgramEnrollmentsInspectorViewTests(SupportViewTestCase):
         render_call_dict = mocked_render.call_args[0][1]
         assert expected_info == render_call_dict['learner_program_enrollments']
 
-    @ddt.data(
-        ('aabbcc', ''),
-        ('', 'test_org')
-    )
-    @ddt.unpack
     @patch_render
-    def test_search_external_key_no_idp(self, user_key_input, idp_input, mocked_render):
+    def test_search_no_external_user_key(self, mocked_render):
         self.client.get(self.url, data={
-            'external_user_key': user_key_input,
-            'IdPSelect': idp_input,
+            'external_user_key': '',
+            'IdPSelect': 'test_org',
         })
 
         expected_errors = [
@@ -847,6 +842,9 @@ class ProgramEnrollmentsInspectorViewTests(SupportViewTestCase):
             'IdPSelect': self.org_key_list[0]
         })
         expected_info = {
+            'user': {
+                'external_user_key': self.external_user_key,
+            },
             'enrollments': expected_enrollments
         }
 

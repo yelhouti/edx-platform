@@ -154,7 +154,7 @@ class ProgramEnrollmentsInspectorView(View):
                         external_user_key, org_key
                     )
                 )
-        else:
+        elif org_key and not external_user_key:
             errors.append(
                 "To perform a search, you must provide either the student's "
                 "(a) edX username, "
@@ -229,6 +229,9 @@ class ProgramEnrollmentsInspectorView(View):
             # We cannot identify edX user from external_user_key and org_key pair
             pass
 
+        enrollments = self._get_enrollments(external_user_key=external_user_key)
+        if enrollments:
+            result['enrollments'] = enrollments
         if found_user:
             try:
                 user_social_auth = UserSocialAuth.objects.get(user=found_user)
@@ -237,9 +240,9 @@ class ProgramEnrollmentsInspectorView(View):
             user_info = serialize_user_info(found_user, user_social_auth)
             result['user'] = user_info
             result['id_verification'] = IDVerificationService.user_status(found_user)
-        enrollments = self._get_enrollments(external_user_key=external_user_key)
-        if enrollments:
-            result['enrollments'] = enrollments
+        elif 'enrollments' in result:
+            result['user'] = {'external_user_key': external_user_key}
+
         return result
 
     def _get_enrollments(self, user=None, external_user_key=None):
