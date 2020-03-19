@@ -281,7 +281,6 @@ class TeamAPITestCase(APITestCase, SharedModuleStoreTestCase):
                 'topics': base_topics,
                 'max_team_size': 5
             })
-
             cls.test_course_1 = CourseFactory.create(
                 org='TestX',
                 course='TS101',
@@ -378,9 +377,21 @@ class TeamAPITestCase(APITestCase, SharedModuleStoreTestCase):
                 course_id=cls.test_course_1.id,
                 topic_id='topic_0'
             )
-            cls.wind_team = CourseTeamFactory.create(name='Wind Team', course_id=cls.test_course_1.id)
-            cls.nuclear_team = CourseTeamFactory.create(name='Nuclear Team', course_id=cls.test_course_1.id)
-            cls.another_team = CourseTeamFactory.create(name='Another Team', course_id=cls.test_course_2.id)
+            cls.wind_team = CourseTeamFactory.create(
+                name='Wind Team',
+                course_id=cls.test_course_1.id,
+                topic_id='topic_1'
+            )
+            cls.nuclear_team = CourseTeamFactory.create(
+                name='Nuclear Team',
+                course_id=cls.test_course_1.id,
+                topic_id='topic_2'
+            )
+            cls.another_team = CourseTeamFactory.create(
+                name='Another Team',
+                course_id=cls.test_course_2.id,
+                topic_id='topic_5'
+            )
             cls.public_profile_team = CourseTeamFactory.create(
                 name='Public Profile Team',
                 course_id=cls.test_course_2.id,
